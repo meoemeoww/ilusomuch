@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <title>я скучаю</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            background: #0a0a0a;
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            color: white;
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+            position: relative;
+            overflow-x: hidden;
+        }
+
+        /* СНЕЖИНКИ */
+        .snowflake {
+            position: fixed;
+            color: #fff;
+            user-select: none;
+            pointer-events: none;
+            opacity: 0.8;
+            font-size: 1.5rem;
+            top: -20px;
+            animation: fall linear infinite;
+            z-index: 1;
+        }
+
+        @keyframes fall {
+            from {
+                transform: translateY(-20px) rotate(0deg);
+            }
+            to {
+                transform: translateY(100vh) rotate(360deg);
+            }
+        }
+
+        .content {
+            max-width: 500px;
+            text-align: center;
+            position: relative;
+            z-index: 10;
+            background: rgba(0,0,0,0.4);
+            backdrop-filter: blur(5px);
+            padding: 40px 30px;
+            border-radius: 40px;
+            border: 1px solid rgba(255,255,255,0.1);
+            box-shadow: 0 20px 50px rgba(0,0,0,0.8);
+        }
+
+        img {
+            width: 200px;
+            height: 200px;
+            border-radius: 30px;
+            object-fit: cover;
+            margin-bottom: 30px;
+            border: 3px solid rgba(255,255,255,0.2);
+            box-shadow: 0 10px 30px rgba(0,0,0,0.8);
+        }
+
+        .message {
+            font-size: 28px;
+            font-weight: 400;
+            line-height: 1.5;
+            margin-bottom: 40px;
+            color: #fff;
+            text-shadow: 0 0 10px rgba(255,255,255,0.3);
+        }
+
+        .timer {
+            font-size: 40px;
+            font-weight: 300;
+            background: rgba(255,255,255,0.05);
+            padding: 25px 20px;
+            border-radius: 30px;
+            backdrop-filter: blur(5px);
+            margin-bottom: 15px;
+            font-family: monospace;
+            border: 1px solid rgba(255,255,255,0.1);
+            letter-spacing: 2px;
+            color: #fff;
+            text-shadow: 0 0 5px rgba(255,255,255,0.3);
+        }
+
+        .timer-label {
+            font-size: 16px;
+            text-transform: uppercase;
+            letter-spacing: 3px;
+            opacity: 0.6;
+            margin-bottom: 15px;
+            color: #aaa;
+        }
+    </style>
+</head>
+<body>
+    <div class="content">
+        <!-- СЮДА ПОТОМ ВСТАВИШЬ СВОЁ ФОТО -->
+        <img src="https://images.unsplash.com/photo-1516585427167-9f4af9627e6c?w=400&auto=format" alt="фото">
+
+        <div class="message">
+            Просто люблю тебя ❤️
+        </div>
+
+        <div class="timer-label">мы вместе уже</div>
+        <div class="timer" id="timer">0 дней 0:00:00</div>
+    </div>
+
+    <script>
+        // ⚠️ УСТАНОВИ СВОЮ ДАТУ ЗДЕСЬ!
+        const startDate = new Date(2024, 0, 15, 12, 0, 0);
+
+        function updateTimer() {
+            const now = new Date();
+            const diff = now - startDate;
+
+            if (diff < 0) {
+                document.getElementById('timer').innerText = 'Ещё не началось...';
+                return;
+            }
+
+            const seconds = Math.floor(diff / 1000);
+            const days = Math.floor(seconds / (3600 * 24));
+            const hours = Math.floor((seconds % (3600 * 24)) / 3600);
+            const minutes = Math.floor((seconds % 3600) / 60);
+            const secs = seconds % 60;
+
+            document.getElementById('timer').innerHTML = 
+                `${days} дней ${hours.toString().padStart(2, '0')}:${minutes.toString().padStart(2, '0')}:${secs.toString().padStart(2, '0')}`;
+        }
+
+        updateTimer();
+        setInterval(updateTimer, 1000);
+
+        // ❄️ СНЕЖИНКИ
+        function createSnowflake() {
+            const snowflake = document.createElement('div');
+            snowflake.classList.add('snowflake');
+            snowflake.innerHTML = '❄️';
+            
+            const size = Math.random() * 20 + 10;
+            snowflake.style.fontSize = size + 'px';
+            snowflake.style.left = Math.random() * 100 + '%';
+            snowflake.style.animationDuration = Math.random() * 15 + 10 + 's';
+            snowflake.style.animationDelay = Math.random() * 5 + 's';
+            snowflake.style.opacity = Math.random() * 0.5 + 0.3;
+            
+            document.body.appendChild(snowflake);
+            
+            setTimeout(() => {
+                snowflake.remove();
+            }, 25000);
+        }
+
+        for(let i = 0; i < 30; i++) {
+            setTimeout(createSnowflake, i * 200);
+        }
+        
+        setInterval(createSnowflake, 300);
+    </script>
+</body>
+</html>
