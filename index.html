@@ -2,7 +2,7 @@
 <html lang="ru">
 <head>
     <meta charset="UTF-8">
-    <title>я скучаю</title>
+    <title>ilusomuch</title>
     <style>
         * {
             margin: 0;
@@ -23,25 +23,27 @@
             overflow-x: hidden;
         }
 
-        /* СНЕЖИНКИ */
-        .snowflake {
+        /* ТОЧКИ */
+        .dot {
             position: fixed;
-            color: #fff;
+            width: 4px;
+            height: 4px;
+            background: white;
+            border-radius: 50%;
             user-select: none;
             pointer-events: none;
-            opacity: 0.8;
-            font-size: 1.5rem;
-            top: -20px;
+            top: -10px;
             animation: fall linear infinite;
             z-index: 1;
+            filter: blur(0.5px);
         }
 
         @keyframes fall {
             from {
-                transform: translateY(-20px) rotate(0deg);
+                transform: translateY(-20px);
             }
             to {
-                transform: translateY(100vh) rotate(360deg);
+                transform: translateY(100vh);
             }
         }
 
@@ -54,61 +56,61 @@
             backdrop-filter: blur(5px);
             padding: 40px 30px;
             border-radius: 40px;
-            border: 1px solid rgba(255,255,255,0.1);
-            box-shadow: 0 20px 50px rgba(0,0,0,0.8);
+            border: none;
+            box-shadow: none;
         }
 
         img {
-            width: 200px;
-            height: 200px;
+            width: 180px;
+            height: 180px;
             border-radius: 30px;
             object-fit: cover;
-            margin-bottom: 30px;
-            border: 3px solid rgba(255,255,255,0.2);
+            margin-bottom: 25px;
+            border: none;
             box-shadow: 0 10px 30px rgba(0,0,0,0.8);
         }
 
         .message {
-            font-size: 28px;
+            font-size: 24px;
             font-weight: 400;
             line-height: 1.5;
-            margin-bottom: 40px;
+            margin-bottom: 35px;
             color: #fff;
             text-shadow: 0 0 10px rgba(255,255,255,0.3);
+            font-family: 'Georgia', 'Times New Roman', serif;
         }
 
         .timer {
-            font-size: 40px;
+            font-size: 36px;
             font-weight: 300;
-            background: rgba(255,255,255,0.05);
-            padding: 25px 20px;
-            border-radius: 30px;
-            backdrop-filter: blur(5px);
-            margin-bottom: 15px;
-            font-family: monospace;
-            border: 1px solid rgba(255,255,255,0.1);
+            background: transparent;
+            padding: 20px 15px;
+            backdrop-filter: none;
+            margin-bottom: 10px;
+            font-family: 'Georgia', 'Times New Roman', monospace;
+            border: none;
             letter-spacing: 2px;
             color: #fff;
             text-shadow: 0 0 5px rgba(255,255,255,0.3);
         }
 
         .timer-label {
-            font-size: 16px;
+            font-size: 14px;
             text-transform: uppercase;
-            letter-spacing: 3px;
+            letter-spacing: 2px;
             opacity: 0.6;
-            margin-bottom: 15px;
+            margin-bottom: 10px;
             color: #aaa;
+            font-family: 'Georgia', 'Times New Roman', serif;
         }
     </style>
 </head>
 <body>
     <div class="content">
-        <!-- СЮДА ПОТОМ ВСТАВИШЬ СВОЁ ФОТО -->
         <img src="https://images.unsplash.com/photo-1516585427167-9f4af9627e6c?w=400&auto=format" alt="фото">
 
         <div class="message">
-            Просто люблю тебя ❤️
+            просто хочу сказать, что люблю тебя &lt;3
         </div>
 
         <div class="timer-label">мы вместе уже</div>
@@ -117,7 +119,7 @@
 
     <script>
         // ⚠️ УСТАНОВИ СВОЮ ДАТУ ЗДЕСЬ!
-        const startDate = new Date(2024, 0, 15, 12, 0, 0);
+        const startDate = new Date(2022, 6, 15, 19, 30, 0);
 
         function updateTimer() {
             const now = new Date();
@@ -141,31 +143,43 @@
         updateTimer();
         setInterval(updateTimer, 1000);
 
-        // ❄️ СНЕЖИНКИ
-        function createSnowflake() {
-            const snowflake = document.createElement('div');
-            snowflake.classList.add('snowflake');
-            snowflake.innerHTML = '❄️';
+        // ⚪ ТОЧКИ
+        function createDot() {
+            const dot = document.createElement('div');
+            dot.classList.add('dot');
             
-            const size = Math.random() * 20 + 10;
-            snowflake.style.fontSize = size + 'px';
-            snowflake.style.left = Math.random() * 100 + '%';
-            snowflake.style.animationDuration = Math.random() * 15 + 10 + 's';
-            snowflake.style.animationDelay = Math.random() * 5 + 's';
-            snowflake.style.opacity = Math.random() * 0.5 + 0.3;
+            // Случайный размер точки (от 2 до 8 пикселей)
+            const size = Math.random() * 6 + 2;
+            dot.style.width = size + 'px';
+            dot.style.height = size + 'px';
             
-            document.body.appendChild(snowflake);
+            // Случайная яркость (от 0.2 до 1)
+            const opacity = Math.random() * 0.8 + 0.2;
+            dot.style.opacity = opacity;
+            
+            // Некоторые точки будут ярче (добавляем небольшое свечение самым ярким)
+            if (opacity > 0.8) {
+                dot.style.boxShadow = '0 0 6px rgba(255, 255, 255, 0.8)';
+            }
+            
+            dot.style.left = Math.random() * 100 + '%';
+            dot.style.animationDuration = Math.random() * 10 + 5 + 's'; // от 5 до 15 секунд
+            dot.style.animationDelay = Math.random() * 5 + 's';
+            
+            document.body.appendChild(dot);
             
             setTimeout(() => {
-                snowflake.remove();
-            }, 25000);
+                dot.remove();
+            }, 20000);
         }
 
-        for(let i = 0; i < 30; i++) {
-            setTimeout(createSnowflake, i * 200);
+        // Создаем начальные точки
+        for(let i = 0; i < 50; i++) {
+            setTimeout(createDot, i * 50);
         }
         
-        setInterval(createSnowflake, 300);
+        // Продолжаем создавать новые точки
+        setInterval(createDot, 150);
     </script>
 </body>
 </html>
